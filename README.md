@@ -64,3 +64,4 @@ npm test
 - Price/quantity fields accept Arabic-Indic digits and decimal commas (they are now text inputs with a decimal keyboard).
 - Stored data and backup imports are rebuilt through a sanitiser (invalid prices, unknown units, orphan entries and unsafe colours are dropped); restoring a backup asks first; a full or blocked storage shows a message.
 - Limit: no service worker, so the app needs a connection for the first load.
+- Offline: a service worker precaches the app shell and the bundled fonts (added in round 2 review).
