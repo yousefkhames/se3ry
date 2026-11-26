@@ -1,0 +1,12 @@
+{
+  "name": "Se3ry — سعري",
+  "short_name": "Se3ry",
+  "description": "Supermarket price memory with unit prices and a real-discount detector.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f4f6f5",
+  "theme_color": "#0e9f6e",
+  "icons": [
+    { "src": "assets/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

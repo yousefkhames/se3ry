@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0e9f6e">
+<meta name="description" content="Se3ry — supermarket price memory with unit prices and a real-discount detector. Free, offline, Arabic & English. سعري — ذاكرة أسعار السوبرماركت.">
+<link rel="manifest" href="manifest.webmanifest">
 <title>Se3ry — Supermarket price memory</title>
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -68,7 +70,8 @@
         </label>
       </div>
       <label><span data-i18n="add.store">المتجر</span>
-        <input id="addStore" type="text" data-i18n-ph="add.storePlaceholder" autocomplete="off">
+        <input id="addStore" type="text" list="storeList" data-i18n-ph="add.storePlaceholder" autocomplete="off">
+        <datalist id="storeList"></datalist>
       </label>
       <div class="row-3">
         <label><span data-i18n="add.price">السعر</span>
@@ -112,6 +115,9 @@
       <label><span data-i18n="add.product">المنتج</span>
         <select id="checkProduct"></select>
       </label>
+      <label><span data-i18n="add.store">المتجر</span>
+        <input id="checkStore" type="text" list="storeList" data-i18n-ph="add.storePlaceholder" autocomplete="off">
+      </label>
       <div class="row-3">
         <label><span data-i18n="add.price">السعر</span>
           <input id="checkPrice" type="number" min="0" step="0.01" inputmode="decimal">
@@ -131,6 +137,7 @@
       <button id="checkRun" class="btn primary" data-i18n="check.evaluate">افحص السعر</button>
     </div>
     <div id="checkResult"></div>
+    <button id="checkRecord" class="btn secondary" hidden data-i18n="check.record">سجل هذا السعر</button>
   </section>
 
   <!-- SETTINGS -->

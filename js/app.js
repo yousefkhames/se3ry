@@ -177,6 +177,16 @@
     fillProductSelect($('#addProduct'), true);
     toggleNewProduct();
     $('#addDate').value = todayISO();
+    // store autocomplete from previously used stores
+    var dl = $('#storeList'); dl.innerHTML = '';
+    var seen = {};
+    DB.entries.forEach(function (e) {
+      if (e.store && !seen[e.store]) {
+        seen[e.store] = 1;
+        var o = document.createElement('option');
+        o.value = e.store; dl.appendChild(o);
+      }
+    });
     updateAddUnitPrice();
   }
   function toggleNewProduct() {
@@ -193,8 +203,16 @@
     if (pid === '__new__') {
       var name = $('#addName').value.trim();
       if (!name) { toast(t('check.verdict.invalid')); return; }
-      pid = C.uid('p');
-      DB.products.push({ id: pid, name: name, brand: $('#addBrand').value.trim(), category: $('#addCategory').value.trim() });
+      // reuse an existing product with the same name (case-insensitive) instead of duplicating
+      var lname = name.toLowerCase();
+      var existing = null;
+      DB.products.forEach(function (p) { if (p.name.toLowerCase() === lname) existing = p; });
+      if (existing) {
+        pid = existing.id;
+      } else {
+        pid = C.uid('p');
+        DB.products.push({ id: pid, name: name, brand: $('#addBrand').value.trim(), category: $('#addCategory').value.trim() });
+      }
     }
     var price = Number($('#addPrice').value), qty = Number($('#addQty').value), unit = $('#addUnit').value;
     if (!C.normalize(price, qty, unit)) { toast(t('check.verdict.invalid')); return; }
@@ -250,6 +268,14 @@
         });
         body += '</div>';
         body += '<p class="muted">' + st.count + ' ' + esc(t('products.entries')) + '</p>';
+        // recent entries with per-entry delete
+        body += '<ul class="entry-list">';
+        entriesFor(p.id).slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; }).slice(0, 5).forEach(function (e) {
+          body += '<li><span>' + esc(e.date) + ' · ' + esc(e.store || '—') + ' · ' + esc(fmtMoney(e.price)) +
+            ' / ' + esc(String(e.qty)) + ' ' + esc(t('unit.' + e.unit)) + (e.onSale ? ' 🏷' : '') + '</span>' +
+            '<button class="icon-btn" data-delentry="' + e.id + '" title="✕">✕</button></li>';
+        });
+        body += '</ul>';
       } else {
         body += '<p class="muted">' + esc(t('products.noData')) + '</p>';
       }
@@ -262,6 +288,13 @@
         var id = btn.getAttribute('data-del');
         DB.products = DB.products.filter(function (p) { return p.id !== id; });
         DB.entries = DB.entries.filter(function (e) { return e.productId !== id; });
+        save(); renderProducts();
+      });
+    });
+    $$('#productList [data-delentry]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var id = btn.getAttribute('data-delentry');
+        DB.entries = DB.entries.filter(function (e) { return e.id !== id; });
         save(); renderProducts();
       });
     });
@@ -313,6 +346,23 @@
     }
     html += '</div>';
     resBox.innerHTML = html;
+    // offer to record the checked price as a real entry
+    var recBtn = $('#checkRecord');
+    if (r.candidateUnitPrice != null) {
+      recBtn.hidden = false;
+      recBtn.onclick = function () {
+        DB.entries.push({
+          id: C.uid('e'), productId: pid,
+          store: $('#checkStore').value.trim(),
+          date: $('#checkDate').value || todayISO(),
+          price: cand.price, qty: cand.qty, unit: cand.unit, onSale: true
+        });
+        save(); toast(t('add.saved'));
+        recBtn.hidden = true;
+      };
+    } else {
+      recBtn.hidden = true;
+    }
   }
 
   /* ---------- Settings ---------- */

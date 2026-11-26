@@ -164,6 +164,16 @@ input:focus, select:focus { outline: 2px solid color-mix(in srgb, var(--primary)
 }
 .toast.show { opacity: 1; transform: translateY(0); }
 
+/* Entry list */
+.entry-list { list-style: none; margin: 6px 0 0; padding: 0; }
+.entry-list li {
+  display: flex; justify-content: space-between; align-items: center; gap: 8px;
+  font-size: 13px; padding: 6px 0; border-bottom: 1px dashed var(--border); color: var(--muted);
+}
+.entry-list li:last-child { border-bottom: 0; }
+
+#checkRecord { width: 100%; margin-top: 10px; }
+
 .muted { color: var(--muted); }
 .small { font-size: 12px; }
 
