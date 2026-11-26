@@ -150,7 +150,7 @@
       if (a.type === 'fakeSale') {
         li.innerHTML = '<span class="deal-dot bad"></span><strong>' + esc(a.p.name) + '</strong>: ' + esc(t('home.fakeSale'));
       } else {
-        li.innerHTML = '<span class="deal-dot warn"></span><strong>' + esc(a.p.name) + '</strong>: ' + esc(t('home.shrinkWarn')) +
+        li.innerHTML = '<span class="deal-dot warn"></span><strong>' + esc(a.p.name) + '</strong>: ' + esc(t('products.shrinkWarn')) +
           ' (−' + Math.round(a.f.sizeDropPct) + '% ' + esc(t('add.qty')).toLowerCase() + ')';
       }
       ah.appendChild(li);
