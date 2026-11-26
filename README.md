@@ -59,3 +59,8 @@ npm test
 ## License
 
 [MIT](LICENSE) — do what you like, keep the notice.
+
+## Round 2 review notes
+- Price/quantity fields accept Arabic-Indic digits and decimal commas (they are now text inputs with a decimal keyboard).
+- Stored data and backup imports are rebuilt through a sanitiser (invalid prices, unknown units, orphan entries and unsafe colours are dropped); restoring a backup asks first; a full or blocked storage shows a message.
+- Limit: no service worker, so the app needs a connection for the first load.

@@ -228,8 +228,43 @@
         if (saved[k] !== undefined && saved[k] !== null && saved[k] !== '') s[k] = saved[k];
       });
     }
+    ['appName','appNameAr','tagline','taglineAr','logoEmoji','currency'].forEach(function (k) { s[k] = String(s[k]).slice(0, 60); });
+    ['primary','accent'].forEach(function (k) { if (!/^#[0-9a-fA-F]{3,8}$/.test(String(s[k]))) s[k] = DEFAULT_SETTINGS[k]; });
+    if (s.locale !== 'en' && s.locale !== 'ar') s.locale = 'ar';
+    if (s.theme !== 'light' && s.theme !== 'dark') s.theme = 'light';
+    s.saleThreshold = Number(s.saleThreshold);
     if (!isFinite(Number(s.saleThreshold)) || s.saleThreshold < 0 || s.saleThreshold > 0.9) s.saleThreshold = 0.10;
     return s;
+  }
+
+  /* Number from user text: Arabic-Indic digits, decimal comma or Arabic decimal mark. NaN when not a number. */
+  function toNum(v) {
+    if (typeof v === 'number') return v;
+    var t = String(v == null ? '' : v).trim()
+      .replace(/[\u0660-\u0669]/g, function (c) { return c.charCodeAt(0) - 0x660; })
+      .replace(/[\u06F0-\u06F9]/g, function (c) { return c.charCodeAt(0) - 0x6F0; })
+      .replace(/\u066B/g, '.').replace(/[\u066C\s]/g, '').replace(',', '.');
+    return /^[+-]?(\d+\.?\d*|\.\d+)$/.test(t) ? parseFloat(t) : NaN;
+  }
+
+  /* Rebuild products and entries from untrusted data; drops anything invalid. */
+  function sanitizeData(d) {
+    var str = function (v, n) { return String(v == null ? '' : v).slice(0, n); };
+    var ids = {}, products = [];
+    (Array.isArray(d.products) ? d.products : []).slice(0, 5000).forEach(function (p) {
+      if (!p || typeof p !== 'object' || !p.id || !p.name || ids[String(p.id)]) return;
+      ids[String(p.id)] = 1;
+      products.push({ id: str(p.id, 80), name: str(p.name, 120), brand: str(p.brand, 80), category: str(p.category, 80) });
+    });
+    var entries = [];
+    (Array.isArray(d.entries) ? d.entries : []).slice(0, 50000).forEach(function (e) {
+      if (!e || typeof e !== 'object' || !ids[String(e.productId)]) return;
+      var price = toNum(e.price), qty = toNum(e.qty);
+      if (!normalize(price, qty, e.unit)) return;
+      var date = /^\d{4}-\d{2}-\d{2}/.test(String(e.date)) ? String(e.date).slice(0, 10) : new Date().toISOString().slice(0, 10);
+      entries.push({ id: str(e.id || uid('e'), 80), productId: str(e.productId, 80), store: str(e.store, 80), date: date, price: price, qty: qty, unit: e.unit, onSale: e.onSale === true });
+    });
+    return { products: products, entries: entries };
   }
 
   function uid(prefix) {
@@ -243,6 +278,8 @@
     isUnit: isUnit,
     dimension: dimension,
     normalize: normalize,
+    toNum: toNum,
+    sanitizeData: sanitizeData,
     sameDimension: sameDimension,
     median: median,
     mean: mean,

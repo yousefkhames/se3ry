@@ -170,3 +170,13 @@ test('uid is unique-ish', () => {
   assert.notEqual(a, b);
   assert.ok(a.startsWith('p-'));
 });
+
+test('toNum reads Arabic digits and decimal commas; sanitizeData drops hostile rows', () => {
+  const C = require('../js/core.js');
+  assert.equal(C.toNum('١٢٫٥'), 12.5); assert.equal(C.toNum('3,5'), 3.5); assert.ok(isNaN(C.toNum('abc')));
+  const r = C.sanitizeData({ products: [{ id: 'a', name: '<b>x</b>' }, { id: 'a', name: 'dup' }, null], entries: [
+    { productId: 'a', price: '10', qty: 1, unit: 'kg', date: '2026-01-02' }, { productId: 'zzz', price: 1, qty: 1, unit: 'kg' },
+    { productId: 'a', price: -5, qty: 1, unit: 'kg' }, { productId: 'a', price: 5, qty: 1, unit: 'parsec' }] });
+  assert.equal(r.products.length, 1); assert.equal(r.entries.length, 1); assert.equal(r.entries[0].price, 10);
+  assert.equal(C.mergeSettings({ primary: 'red;} body{display:none', theme: 'x' }).primary, '#0e9f6e');
+});

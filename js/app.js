@@ -12,11 +12,13 @@
       if (!raw) return blank();
       var d = JSON.parse(raw);
       if (!d || !Array.isArray(d.products) || !Array.isArray(d.entries)) return blank();
+      var cl = C.sanitizeData(d);
+      d.products = cl.products; d.entries = cl.entries;
       d.settings = C.mergeSettings(d.settings);
       return d;
     } catch (e) { return blank(); }
   }
-  function save() { localStorage.setItem(LS_KEY, JSON.stringify(DB)); }
+  function save() { try { localStorage.setItem(LS_KEY, JSON.stringify(DB)); } catch (e) { try { toast(t('common.saveFailed')); } catch (e2) {} } }
   var DB = load();
 
   /* ---------- Helpers ---------- */
@@ -218,7 +220,7 @@
         DB.products.push({ id: pid, name: name, brand: $('#addBrand').value.trim(), category: $('#addCategory').value.trim() });
       }
     }
-    var price = Number($('#addPrice').value), qty = Number($('#addQty').value), unit = $('#addUnit').value;
+    var price = C.toNum($('#addPrice').value), qty = C.toNum($('#addQty').value), unit = $('#addUnit').value;
     if (!C.normalize(price, qty, unit)) { toast(t('check.verdict.invalid')); return; }
     DB.entries.push({
       id: C.uid('e'), productId: pid,
@@ -335,7 +337,7 @@
     var pid = $('#checkProduct').value;
     var resBox = $('#checkResult');
     if (!pid) { resBox.innerHTML = ''; return; }
-    var cand = { price: Number($('#checkPrice').value), qty: Number($('#checkQty').value), unit: $('#checkUnit').value };
+    var cand = { price: C.toNum($('#checkPrice').value), qty: C.toNum($('#checkQty').value), unit: $('#checkUnit').value };
     var r = C.evaluateDiscount(entriesFor(pid), cand, Number(DB.settings.saleThreshold));
     var cls = { great: 'good', good: 'good', fair: 'warn', fake: 'bad', unknown: 'muted', invalid: 'bad' }[r.verdict];
     var html = '<div class="verdict ' + cls + '"><div class="verdict-label">' + esc(t('check.verdict.' + r.verdict, { n: r.needed || 3 })) + '</div>';
@@ -389,7 +391,7 @@
     s.primary = $('#setPrimary').value; s.accent = $('#setAccent').value;
     s.currency = $('#setCurrency').value.trim().toUpperCase() || 'EGP';
     s.locale = $('#setLocale').value; s.theme = $('#setTheme').value;
-    s.saleThreshold = Math.min(90, Math.max(0, Number($('#setThreshold').value) || 10)) / 100;
+    s.saleThreshold = Math.min(90, Math.max(0, C.toNum($('#setThreshold').value) || 10)) / 100;
     save(); applySettings(); renderSettings();
     toast(t('settings.saved'));
   }
@@ -488,7 +490,9 @@
         try {
           var d = JSON.parse(text);
           if (d.kind !== 'se3ry-backup' || !Array.isArray(d.products) || !Array.isArray(d.entries)) throw new Error('bad');
-          DB.products = d.products; DB.entries = d.entries;
+          var cl = C.sanitizeData(d);
+          if (!confirmDialog(t('settings.confirmRestore').replace('{n}', cl.entries.length))) return;
+          DB.products = cl.products; DB.entries = cl.entries;
           DB.settings = C.mergeSettings(d.settings);
           save(); applySettings(); render('home'); toast(t('settings.imported'));
         } catch (e) { toast(t('settings.importFailed')); }
