@@ -151,7 +151,7 @@
         li.innerHTML = '<span class="deal-dot bad"></span><strong>' + esc(a.p.name) + '</strong>: ' + esc(t('home.fakeSale'));
       } else {
         li.innerHTML = '<span class="deal-dot warn"></span><strong>' + esc(a.p.name) + '</strong>: ' + esc(t('products.shrinkWarn')) +
-          ' (−' + Math.round(a.f.sizeDropPct) + '% ' + esc(t('add.qty')).toLowerCase() + ')';
+          ' (−' + Math.round(a.f.sizeDropPct) + '%)' ;
       }
       ah.appendChild(li);
     });
@@ -492,6 +492,10 @@
     });
     var start = (location.hash || '').replace('#', '');
     go(VIEWS.indexOf(start) >= 0 ? start : 'home');
+    window.addEventListener('hashchange', function () {
+      var v = (location.hash || '').replace('#', '');
+      if (VIEWS.indexOf(v) >= 0) go(v);
+    });
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

@@ -68,6 +68,14 @@ test('navigation switches views', () => {
   assert.equal($(w, '#view-settings').hidden, false);
 });
 
+test('hashchange switches views (deep links / back button)', () => {
+  const w = boot();
+  w.location.hash = 'products';
+  w.dispatchEvent(new w.Event('hashchange'));
+  assert.equal($(w, '#view-products').hidden, false);
+  assert.equal($(w, '#view-home').hidden, true);
+});
+
 test('add flow: create product + entry, unit price preview updates', () => {
   const w = boot();
   $(w, '#nav-add').click();
