@@ -1,0 +1,132 @@
+/* Se3ry — Arabic / English strings. */
+(function (root) {
+  'use strict';
+  var STR = {
+    en: {
+      'app.tagline': 'Supermarket price memory',
+      'nav.home': 'Home', 'nav.add': 'Add', 'nav.products': 'Products', 'nav.check': 'Deal check', 'nav.settings': 'Settings',
+      'home.title': 'Dashboard',
+      'home.products': 'Products tracked', 'home.entries': 'Prices recorded', 'home.stores': 'Stores',
+      'home.bestDeals': 'Cheapest right now', 'home.alerts': 'Watch out',
+      'home.empty': 'No prices yet. Add your first purchase to start building your price memory.',
+      'home.loadSample': 'Load sample data', 'home.clearAll': 'Erase all data',
+      'home.shrinkflation': 'Shrinkflation spotted', 'home.fakeSale': '“Sale” above your usual price',
+      'add.title': 'Record a price',
+      'add.product': 'Product', 'add.productNew': 'New product…', 'add.productName': 'Product name',
+      'add.brand': 'Brand (optional)', 'add.category': 'Category (optional)',
+      'add.store': 'Store', 'add.storePlaceholder': 'e.g. Carrefour, Seoudi, local kiosk',
+      'add.price': 'Price', 'add.qty': 'Size / quantity', 'add.unit': 'Unit',
+      'add.date': 'Date', 'add.onSale': 'Marked as on sale',
+      'add.save': 'Save price', 'add.saved': 'Saved.',
+      'add.unitPrice': 'Unit price',
+      'products.title': 'Products', 'products.search': 'Search products…',
+      'products.history': 'Price history', 'products.entries': 'entries',
+      'products.best': 'Best seen', 'products.latest': 'Latest', 'products.median': 'Typical',
+      'products.delete': 'Delete product', 'products.noData': 'No products yet.',
+      'products.byStore': 'Prices by store', 'products.shrinkWarn': 'Pack shrank while price held',
+      'check.title': 'Real-discount detector',
+      'check.intro': 'Standing in front of a “deal”? Enter the shelf price and Se3ry checks it against everything you have recorded for this product.',
+      'check.evaluate': 'Check this price',
+      'check.verdict.great': 'Real deal — at or below the best price you have ever recorded.',
+      'check.verdict.good': 'Genuinely cheaper than your typical price.',
+      'check.verdict.fair': 'Close to your typical price. Not a real bargain.',
+      'check.verdict.fake': 'Fake discount — above what you usually pay.',
+      'check.verdict.unknown': 'Not enough history yet — record at least {n} prices for this product.',
+      'check.verdict.invalid': 'Enter a valid price, size and unit.',
+      'check.vsTypical': 'vs your typical', 'check.vsBest': 'vs your best',
+      'check.history': 'Based on {n} recorded prices',
+      'settings.title': 'Settings',
+      'settings.branding': 'Branding (white-label)',
+      'settings.appName': 'App name (English)', 'settings.appNameAr': 'App name (Arabic)',
+      'settings.tagline': 'Tagline (English)', 'settings.taglineAr': 'Tagline (Arabic)',
+      'settings.logo': 'Logo emoji / text', 'settings.primary': 'Primary color', 'settings.accent': 'Accent color',
+      'settings.currency': 'Currency code', 'settings.language': 'Language', 'settings.theme': 'Theme',
+      'settings.themeLight': 'Light', 'settings.themeDark': 'Dark',
+      'settings.threshold': 'Deal threshold (% below typical)',
+      'settings.save': 'Save settings', 'settings.saved': 'Settings saved.',
+      'settings.exportBrand': 'Export branding', 'settings.importBrand': 'Import branding',
+      'settings.data': 'Your data',
+      'settings.exportData': 'Export all data (JSON)', 'settings.exportCSV': 'Export prices (CSV)',
+      'settings.importData': 'Import data (JSON)',
+      'settings.whiteLabelNote': 'Branding exports as a small JSON file a shop can rebrand with: name, logo, colors, currency and language.',
+      'settings.reset': 'Reset branding to defaults',
+      'settings.imported': 'Imported.', 'settings.importFailed': 'Import failed — invalid file.',
+      'common.cancel': 'Cancel', 'common.confirm': 'Confirm', 'common.close': 'Close',
+      'common.per': 'per', 'common.on': 'on', 'common.at': 'at',
+      'common.confirmErase': 'Erase every product and price? This cannot be undone.',
+      'common.confirmDeleteProduct': 'Delete this product and all its prices?',
+      'unit.kg': 'kg', 'unit.g': 'g', 'unit.l': 'L', 'unit.ml': 'ml', 'unit.piece': 'piece', 'unit.pack': 'pack',
+      'per.kg': '/kg', 'per.l': '/L', 'per.piece': '/piece'
+    },
+    ar: {
+      'app.tagline': 'ذاكرة أسعار السوبرماركت',
+      'nav.home': 'الرئيسية', 'nav.add': 'إضافة', 'nav.products': 'المنتجات', 'nav.check': 'كشف الخصم', 'nav.settings': 'الإعدادات',
+      'home.title': 'لوحة المتابعة',
+      'home.products': 'منتجات متتبعة', 'home.entries': 'أسعار مسجلة', 'home.stores': 'متاجر',
+      'home.bestDeals': 'الأرخص حاليًا', 'home.alerts': 'انتبه',
+      'home.empty': 'لا توجد أسعار بعد. أضف أول عملية شراء لتبدأ ذاكرة الأسعار.',
+      'home.loadSample': 'تحميل بيانات تجريبية', 'home.clearAll': 'مسح كل البيانات',
+      'home.shrinkflation': 'العبوة صغرت والسعر ثابت', 'home.fakeSale': '«عرض» أعلى من سعرك المعتاد',
+      'add.title': 'تسجيل سعر',
+      'add.product': 'المنتج', 'add.productNew': 'منتج جديد…', 'add.productName': 'اسم المنتج',
+      'add.brand': 'الماركة (اختياري)', 'add.category': 'الفئة (اختياري)',
+      'add.store': 'المتجر', 'add.storePlaceholder': 'مثال: كارفور، سعودي، كشك الحارة',
+      'add.price': 'السعر', 'add.qty': 'الحجم / الكمية', 'add.unit': 'الوحدة',
+      'add.date': 'التاريخ', 'add.onSale': 'معلن كعرض/خصم',
+      'add.save': 'حفظ السعر', 'add.saved': 'تم الحفظ.',
+      'add.unitPrice': 'سعر الوحدة',
+      'products.title': 'المنتجات', 'products.search': 'ابحث في المنتجات…',
+      'products.history': 'تاريخ السعر', 'products.entries': 'سجل',
+      'products.best': 'أقل سعر', 'products.latest': 'الأحدث', 'products.median': 'المعتاد',
+      'products.delete': 'حذف المنتج', 'products.noData': 'لا توجد منتجات بعد.',
+      'products.byStore': 'الأسعار حسب المتجر', 'products.shrinkWarn': 'العبوة صغرت والسعر ثابت',
+      'check.title': 'كاشف الخصم الحقيقي',
+      'check.intro': 'واقف قدام «عرض»؟ أدخل سعر الرف وسعري يقارنه بكل ما سجلته لهذا المنتج.',
+      'check.evaluate': 'افحص السعر',
+      'check.verdict.great': 'عرض حقيقي — عند أو تحت أقل سعر سجلته أبدًا.',
+      'check.verdict.good': 'أرخص بوضوح من سعرك المعتاد.',
+      'check.verdict.fair': 'قريب من سعرك المعتاد. ليس صفقة حقيقية.',
+      'check.verdict.fake': 'خصم وهمي — أعلى مما تدفعه عادة.',
+      'check.verdict.unknown': 'لا يوجد تاريخ كافٍ بعد — سجل {n} أسعار على الأقل لهذا المنتج.',
+      'check.verdict.invalid': 'أدخل سعرًا وحجمًا ووحدة صحيحة.',
+      'check.vsTypical': 'مقارنة بالمعتاد', 'check.vsBest': 'مقارنة بالأقل',
+      'check.history': 'بناءً على {n} سعر مسجل',
+      'settings.title': 'الإعدادات',
+      'settings.branding': 'الهوية (قالب قابل لإعادة البيع)',
+      'settings.appName': 'اسم التطبيق (إنجليزي)', 'settings.appNameAr': 'اسم التطبيق (عربي)',
+      'settings.tagline': 'الشعار (إنجليزي)', 'settings.taglineAr': 'الشعار (عربي)',
+      'settings.logo': 'إيموجي / نص الشعار', 'settings.primary': 'اللون الأساسي', 'settings.accent': 'اللون المميز',
+      'settings.currency': 'رمز العملة', 'settings.language': 'اللغة', 'settings.theme': 'المظهر',
+      'settings.themeLight': 'فاتح', 'settings.themeDark': 'داكن',
+      'settings.threshold': 'حد الصفقة (٪ تحت السعر المعتاد)',
+      'settings.save': 'حفظ الإعدادات', 'settings.saved': 'تم حفظ الإعدادات.',
+      'settings.exportBrand': 'تصدير الهوية', 'settings.importBrand': 'استيراد هوية',
+      'settings.data': 'بياناتك',
+      'settings.exportData': 'تصدير كل البيانات (JSON)', 'settings.exportCSV': 'تصدير الأسعار (CSV)',
+      'settings.importData': 'استيراد بيانات (JSON)',
+      'settings.whiteLabelNote': 'الهوية تُصدَّر كملف JSON صغير يمكن لأي محل إعادة تخصيصه: الاسم، الشعار، الألوان، العملة واللغة.',
+      'settings.reset': 'إعادة الهوية للوضع الافتراضي',
+      'settings.imported': 'تم الاستيراد.', 'settings.importFailed': 'فشل الاستيراد — ملف غير صالح.',
+      'common.cancel': 'إلغاء', 'common.confirm': 'تأكيد', 'common.close': 'إغلاق',
+      'common.per': 'لكل', 'common.on': 'في', 'common.at': 'عند',
+      'common.confirmErase': 'مسح كل المنتجات والأسعار؟ لا يمكن التراجع.',
+      'common.confirmDeleteProduct': 'حذف هذا المنتج وكل أسعاره؟',
+      'unit.kg': 'كجم', 'unit.g': 'جم', 'unit.l': 'لتر', 'unit.ml': 'مل', 'unit.piece': 'قطعة', 'unit.pack': 'عبوة',
+      'per.kg': '/كجم', 'per.l': '/لتر', 'per.piece': '/قطعة'
+    }
+  };
+
+  function makeT(locale) {
+    var table = STR[locale] || STR.en;
+    return function (key, vars) {
+      var s = table[key];
+      if (s === undefined) s = STR.en[key];
+      if (s === undefined) return key;
+      if (vars) Object.keys(vars).forEach(function (k) { s = s.replace('{' + k + '}', vars[k]); });
+      return s;
+    };
+  }
+
+  root.Se3ryI18n = { STR: STR, makeT: makeT };
+  if (typeof module === 'object' && module.exports) module.exports = root.Se3ryI18n;
+})(typeof self !== 'undefined' ? self : this);

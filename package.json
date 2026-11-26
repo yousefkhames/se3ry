@@ -1,0 +1,10 @@
+{
+  "name": "se3ry",
+  "version": "1.0.0",
+  "description": "Se3ry — supermarket price memory with unit price and real-discount detector. Static, offline-first, Arabic/English.",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  },
+  "license": "MIT"
+}
