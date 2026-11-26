@@ -30,15 +30,19 @@
   function t(key, vars) { return T(key, vars); }
   var T = null;
 
+  function curLabel() {
+    var c = DB.settings.currency;
+    return (DB.settings.locale === 'ar' && c === 'EGP') ? 'ج.م' : c;
+  }
   function fmtMoney(x) {
     if (!isFinite(x)) return '—';
     var v = Math.round(x * 100) / 100;
-    return v.toLocaleString(DB.settings.locale === 'ar' ? 'ar-EG' : 'en-US') + ' ' + DB.settings.currency;
+    return v.toLocaleString(DB.settings.locale === 'ar' ? 'ar-EG' : 'en-US') + ' ' + curLabel();
   }
   function fmtUnit(u, unitPrice) {
     var key = u === 'kg' ? 'per.kg' : u === 'l' ? 'per.l' : 'per.piece';
     var v = Math.round(unitPrice * 100) / 100;
-    return v.toLocaleString(DB.settings.locale === 'ar' ? 'ar-EG' : 'en-US') + ' ' + DB.settings.currency + t(key);
+    return v.toLocaleString(DB.settings.locale === 'ar' ? 'ar-EG' : 'en-US') + ' ' + curLabel() + t(key);
   }
   function pct(x) {
     var v = Math.round(Math.abs(x) * 10) / 10;

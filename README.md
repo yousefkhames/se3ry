@@ -36,7 +36,7 @@ One codebase, any shop. The settings screen rebrands the whole app — Arabic an
 
 - Vanilla HTML / CSS / JS. Zero dependencies, zero build step.
 - Core logic (`js/core.js`) is a pure module shared by the browser and the test suite.
-- Charts are hand-rolled SVG. Fonts via Google Fonts (Cairo), with system fallbacks.
+- Charts are hand-rolled SVG. Cairo is bundled in `fonts/` (no third-party requests), with system fallbacks. Arabic prices show as "٢٧٫٩ ج.م/كجم".
 - Tests: Node's built-in test runner (`node --test`), 21 unit tests covering unit conversion, statistics, discount verdicts, shrinkflation detection, CSV export and settings.
 - Hosting: GitHub Pages, straight from `main`.
 
