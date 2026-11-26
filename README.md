@@ -12,6 +12,15 @@ Fully bilingual: **العربية** (RTL) and **English**, mobile-first.
 
 ---
 
+## Screenshots
+
+Captured from the live site (https://yousefkhames.github.io/se3ry/).
+
+<p>
+  <img src="docs/screenshots/live-desktop.png" alt="se3ry desktop view" width="640">
+  <img src="docs/screenshots/live-mobile.png" alt="se3ry mobile view" width="200">
+</p>
+
 ## What it does
 
 - **Price memory** — log every purchase: product, store, date, price, pack size, unit. Build your own price history instead of trusting memory.
