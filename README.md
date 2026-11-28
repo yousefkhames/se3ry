@@ -74,3 +74,10 @@ npm test
 - Stored data and backup imports are rebuilt through a sanitiser (invalid prices, unknown units, orphan entries and unsafe colours are dropped); restoring a backup asks first; a full or blocked storage shows a message.
 - Limit: no service worker, so the app needs a connection for the first load.
 - Offline: a service worker precaches the app shell and the bundled fonts (added in round 2 review).
+
+
+## Demo / portfolio project
+
+Static GitHub Pages site. Data stays in your browser. Sample data is fictional and results are not professional, legal, medical or financial advice.
+
+By Yousef Khames · من تطوير يوسف خميس

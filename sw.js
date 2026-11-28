@@ -1,5 +1,5 @@
 /* se3ry service worker: shell and fonts precached, network-first for the rest. */
-const CACHE = 'se3ry-v1';
+const CACHE = 'se3ry-v2';
 const ASSETS = [
   './',
   'assets/logo.svg',
